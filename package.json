@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "CODEX-style history summary rail for the current DSH conversation, with click-to-jump and favorites.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JAYCou/dsh-codex-rail.git"
+  },
+  "homepage": "https://github.com/JAYCou/dsh-codex-rail#readme",
   "icon": "./icon.svg",
   "type": "module",
   "exports": {

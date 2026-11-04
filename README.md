@@ -1,5 +1,9 @@
 # DSH Codex Rail
 
+[English](README.md) | [中文](README.zh.md)
+
+> 为 DeepSeek Harness 对话左侧留白处加入 Codex 风格的回合时间轴，支持悬停预览、点击跳转与收藏。
+
 A Codex-style turn rail for the DeepSeek Harness Web UI. It sits in the narrow gutter between the sidebar and the conversation and shows one short tick per turn.
 
 ## Features

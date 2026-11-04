@@ -14,7 +14,7 @@ A Codex-style turn rail for the DeepSeek Harness Web UI. It sits in the narrow g
 - **Favorites** — star a turn from the card. The top star opens a cross-session favorites panel; clicking a saved turn jumps to it, switching sessions when necessary.
 - **Theme aware** — uses the host's `--dsw-alias-*` tokens and hides itself below 1080 px.
 
-Favorites are stored in the browser's `localStorage` under `dsh-codex-rail.favorites.v1`. No host data is uploaded.
+Favorites are stored in the browser's `localStorage` and are never uploaded.
 
 ## Install
 

@@ -1,4 +1,4 @@
-# Codex History Rail
+# Codex History Rail（CODEX 历史摘要条）
 
 [English](README.md) | 中文
 
@@ -12,7 +12,7 @@
 - **收藏**：在卡片里收藏回合；顶部星标打开跨会话收藏面板，点击收藏项可跳转，必要时自动切换会话。
 - **跟随主题**：只使用宿主的 `--dsw-alias-*` 主题变量；宽度低于 1080px 时自动隐藏。
 
-收藏保存在浏览器 `localStorage` 的 `dsh-codex-rail.favorites.v1` 中，不会上传任何宿主数据。
+收藏保存在浏览器 `localStorage` 中，不会上传任何宿主数据。
 
 ## 安装
 

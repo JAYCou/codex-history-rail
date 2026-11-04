@@ -1,13 +1,13 @@
 {
-  "name": "@local/dsh-codex-rail",
+  "name": "@jaycou/codex-history-rail",
   "version": "1.0.0",
-  "description": "CODEX-style history summary rail for the current DSH conversation, with click-to-jump and favorites.",
+  "description": "Codex History Rail — a Codex-style turn rail for the current DSH conversation, with hover previews, click-to-jump, and favorites.",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JAYCou/dsh-codex-rail.git"
+    "url": "git+https://github.com/JAYCou/codex-history-rail.git"
   },
-  "homepage": "https://github.com/JAYCou/dsh-codex-rail#readme",
+  "homepage": "https://github.com/JAYCou/codex-history-rail#readme",
   "icon": "./icon.svg",
   "type": "module",
   "engines": {

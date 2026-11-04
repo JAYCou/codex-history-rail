@@ -1,4 +1,4 @@
-# DSH Codex Rail
+# Codex History Rail
 
 [English](README.md) | [中文](README.zh.md)
 
@@ -18,11 +18,11 @@ Favorites are stored in the browser's `localStorage` under `dsh-codex-rail.favor
 
 ## Install
 
-Install the bundle from the DSH plugin market, or link this directory into a DSH profile and enable `@local/dsh-codex-rail`:
+Install the bundle from the DSH plugin market, or link this directory into a DSH profile and enable `@jaycou/codex-history-rail`:
 
 ```sh
-# from the directory that contains this package
-dsh plugin add ./dsh-codex-rail
+# from this package directory
+dsh plugin add .
 ```
 
 The package declares `dsh.bundle.patch` and a Web client half. It is a UI-only bundle: the Host half is intentionally empty.

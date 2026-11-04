@@ -1,4 +1,4 @@
-# DSH Codex Rail
+# Codex History Rail
 
 [English](README.md) | 中文
 
@@ -16,11 +16,11 @@
 
 ## 安装
 
-可以从 DSH 插件市场安装；也可以把本目录链接进 DSH profile，然后启用 `@local/dsh-codex-rail`：
+可以从 DSH 插件市场安装；也可以把本目录链接进 DSH profile，然后启用 `@jaycou/codex-history-rail`：
 
 ```sh
-# 在包含本包的目录中执行
-dsh plugin add ./dsh-codex-rail
+# 在本包目录中执行
+dsh plugin add .
 ```
 
 本包声明了 `dsh.bundle.patch` 和 Web 客户端半部。它是纯 UI bundle，Host 半部故意为空。

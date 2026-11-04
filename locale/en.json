@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "CODEX history summary rail",
-    "description": "A narrow timeline in the conversation gutter showing chapter summaries for the current session. Click a chapter to jump to its turn, star the ones worth keeping."
+    "title": "Codex History Rail",
+    "description": "A narrow Codex-style turn rail in the conversation gutter showing chapter summaries for the current session. Hover a line to preview it, click to jump to its turn, and star the ones worth keeping."
   }
 }

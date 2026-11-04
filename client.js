@@ -1,4 +1,4 @@
-// Client half of @local/dsh-codex-rail.
+// Client half of @jaycou/codex-history-rail.
 //
 // A CODEX-style timeline in the empty gutter between the left sidebar and the
 // conversation column. The rail itself is a column of short horizontal ticks.
@@ -17,13 +17,13 @@
 // column's left edge without knowing the sidebar's current width.
 
 window.__ModuleLoader__.load({
-  id: '@local/dsh-codex-rail',
+  id: '@jaycou/codex-history-rail',
   factory(require) {
     const React = require('react');
     const { createPortal } = require('react-dom');
     const h = React.createElement;
 
-    const PACKAGE_ID = '@local/dsh-codex-rail';
+    const PACKAGE_ID = '@jaycou/codex-history-rail';
     const NS = 'codexHistoryRail';
     const FAVORITES_KEY = 'dsh-codex-rail.favorites.v1';
     const PENDING_KEY = 'dsh-codex-rail.pendingJump.v1';
@@ -937,7 +937,7 @@ window.__ModuleLoader__.load({
         className: 'codex-rail-root',
         style: { top: `${top + 8}px` },
         'aria-label': t('title'),
-        'data-dsh-codex-rail': '',
+        'data-codex-history-rail': '',
         onMouseLeave: () => setHover(null),
       },
         h('div', { className: 'codex-rail-head' },

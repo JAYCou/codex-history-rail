@@ -10,6 +10,9 @@
   "homepage": "https://github.com/JAYCou/dsh-codex-rail#readme",
   "icon": "./icon.svg",
   "type": "module",
+  "engines": {
+    "dsh": ">=0.2.1-rc.3 <0.3.0-0"
+  },
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",

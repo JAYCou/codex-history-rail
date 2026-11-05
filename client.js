@@ -590,8 +590,6 @@ window.__ModuleLoader__.load({
 
       const anchorRef = React.useRef(null);
       const rootRef = React.useRef(null);
-      const scrollerRef = React.useRef(null);
-      const initializedRef = React.useRef(false);
       const pendingJumpRef = React.useRef(undefined);
       const jumpRef = React.useRef(null);
 
@@ -661,25 +659,12 @@ window.__ModuleLoader__.load({
       // rail is reused for another Session by the same slot.
       React.useEffect(() => {
         pendingJumpRef.current = undefined;
-        initializedRef.current = false;
         setActiveTurn(null);
         setHover(null);
         setPanelOpen(false);
         setJumping(null);
         setError('');
       }, [sessionId]);
-
-      // On first paint show the newest chapters. Afterwards follow new turns
-      // only while the reader is already near the bottom.
-      React.useEffect(() => {
-        const element = scrollerRef.current;
-        if (element === null) return;
-        const nearBottom = element.scrollHeight - element.scrollTop - element.clientHeight < 90;
-        if (!initializedRef.current || nearBottom) {
-          initializedRef.current = true;
-          element.scrollTop = element.scrollHeight;
-        }
-      }, [chapters.length, sessionId]);
 
       // A favorite from another Session is opened through uiWorkspace; the
       // target rail picks the request up here once its turn appears in the
@@ -990,10 +975,8 @@ window.__ModuleLoader__.load({
             ? null
             : h('div', { className: 'codex-rail-busy', role: 'status' }, t('loading'))),
         h('div', {
-          ref: scrollerRef,
           className: 'codex-rail-scroll',
           style: { gap: `${tickGap}px` },
-          onScroll: () => { if (hover !== null) setHover(null); },
         },
           chapters.length === 0
             ? h('div', { className: 'codex-rail-empty' }, t('empty'))

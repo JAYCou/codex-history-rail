@@ -12,6 +12,7 @@ A Codex-style turn rail for the DeepSeek Harness Web UI. It sits in the narrow g
 - **Hover preview** — the line grows and a card shows that turn's prompt and assistant response.
 - **Jump to turn** — click a tick or the card's **Jump here** button; the transcript scrolls to that turn and pages history in when needed.
 - **Favorites** — star a turn from the card. The top star opens a cross-session favorites panel; clicking a saved turn jumps to it, switching sessions when necessary.
+- **Fitted rail** — the rail is capped at 80% of the viewport; as turns accumulate, the gap between ticks shrinks so it never runs past that limit or scrolls.
 - **Theme aware** — uses the host's `--dsw-alias-*` tokens and hides itself below 1080 px.
 
 Favorites are stored in the browser's `localStorage` and are never uploaded.

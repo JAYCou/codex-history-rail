@@ -158,7 +158,7 @@ window.__ModuleLoader__.load({
         flex-direction: column;
         align-items: flex-start;
         gap: 7px;
-        overflow-y: auto;
+        overflow-y: hidden;
         overflow-x: hidden;
         padding: 3px 0 4px 10px;
         scrollbar-width: none;
@@ -583,6 +583,9 @@ window.__ModuleLoader__.load({
       const [error, setError] = React.useState('');
       const [host, setHost] = React.useState(null);
       const [top, setTop] = React.useState(0);
+      const [viewportH, setViewportH] = React.useState(() => (
+        typeof window === 'undefined' ? 900 : window.innerHeight
+      ));
       const [, setLocaleTick] = React.useState(0);
 
       const anchorRef = React.useRef(null);
@@ -629,6 +632,7 @@ window.__ModuleLoader__.load({
           const headerRect = header.getBoundingClientRect();
           const rootRect = root.getBoundingClientRect();
           setTop(Math.max(0, Math.round(headerRect.bottom - rootRect.top)));
+          setViewportH(window.innerHeight);
         };
         update();
         let observer = null;
@@ -932,10 +936,37 @@ window.__ModuleLoader__.load({
                   }, '×')))));
       }
 
+      // Keep the rail inside the conversation column and never let it run past
+      // 80% of the viewport. As turns accumulate, the space between ticks is
+      // what shrinks; only for very dense logs do the (invisible) hit areas
+      // compress as well, so every tick still fits without scrolling.
+      const railHeight = Math.max(200, Math.min(
+        Math.round(viewportH * 0.8),
+        viewportH - top - 12,
+      ));
+      const railChrome = 40 + 10 + 7 + (error === '' ? 0 : 24);
+      const listHeight = Math.max(0, railHeight - railChrome);
+      const chapterCount = chapters.length;
+      const minGap = 1;
+      const maxGap = 7;
+      let tickHeight = 12;
+      let tickGap = 7;
+      if (chapterCount > 1) {
+        const naturalGap = (listHeight - chapterCount * tickHeight) / (chapterCount - 1);
+        if (naturalGap >= minGap) {
+          tickGap = Math.min(maxGap, naturalGap);
+        } else {
+          tickGap = minGap;
+          tickHeight = Math.max(2, Math.floor(
+            (listHeight - tickGap * (chapterCount - 1)) / chapterCount,
+          ));
+        }
+      }
+
       const rail = h('div', {
         ref: rootRef,
         className: 'codex-rail-root',
-        style: { top: `${top + 8}px` },
+        style: { top: `${top + 8}px`, height: `${railHeight}px` },
         'aria-label': t('title'),
         'data-codex-history-rail': '',
         onMouseLeave: () => setHover(null),
@@ -961,6 +992,7 @@ window.__ModuleLoader__.load({
         h('div', {
           ref: scrollerRef,
           className: 'codex-rail-scroll',
+          style: { gap: `${tickGap}px` },
           onScroll: () => { if (hover !== null) setHover(null); },
         },
           chapters.length === 0
@@ -971,6 +1003,7 @@ window.__ModuleLoader__.load({
                   key: chapter.turn,
                   type: 'button',
                   className: 'codex-rail-tick',
+                  style: { height: `${tickHeight}px` },
                   'data-active': activeTurn === chapter.turn ? 'true' : undefined,
                   'data-saved': isFavorite ? 'true' : undefined,
                   'aria-label': t('chapter', { turn: chapter.turn }),

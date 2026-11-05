@@ -1,6 +1,6 @@
 {
   "name": "@jaycou/codex-history-rail",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Codex History Rail — a Codex-style turn rail for the current DSH conversation, with hover previews, click-to-jump, and favorites.",
   "license": "MIT",
   "repository": {

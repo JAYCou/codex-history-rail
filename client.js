@@ -80,7 +80,6 @@ window.__ModuleLoader__.load({
       .codex-rail-root {
         position: absolute;
         left: 0;
-        bottom: 0;
         width: 64px;
         z-index: 50;
         box-sizing: border-box;
@@ -93,6 +92,7 @@ window.__ModuleLoader__.load({
         font-family: inherit;
         font-size: 12px;
       }
+      [data-codex-history-rail]:not(#codex-rail-v2) { display: none !important; }
       .codex-rail-root::before {
         content: '';
         position: absolute;
@@ -449,7 +449,11 @@ window.__ModuleLoader__.load({
     let pluginCtx = null;
 
     function ensureStyles() {
-      if (document.querySelector(`style[data-plugin="${PACKAGE_ID}"]`) !== null) return;
+      const existing = document.querySelector(`style[data-plugin="${PACKAGE_ID}"]`);
+      if (existing !== null) {
+        existing.textContent = CSS;
+        return;
+      }
       const tag = document.createElement('style');
       tag.setAttribute('data-plugin', PACKAGE_ID);
       tag.textContent = CSS;
@@ -921,12 +925,13 @@ window.__ModuleLoader__.load({
                   }, '×')))));
       }
 
-      // Keep the rail inside the conversation column and never let it run past
-      // 80% of the viewport. As turns accumulate, the space between ticks is
-      // what shrinks; only for very dense logs do the (invisible) hit areas
-      // compress as well, so every tick still fits without scrolling.
+      // Keep the rail's bottom at 80% of the whole viewport. The top sits below
+      // the session header, so its height is the space from there down to that
+      // boundary. As turns accumulate, the space between ticks is what shrinks;
+      // only for very dense logs do the (invisible) hit areas compress as well,
+      // so every tick still fits without scrolling.
       const railHeight = Math.max(200, Math.min(
-        Math.round(viewportH * 0.8),
+        Math.round(viewportH * 0.8) - (top + 8),
         viewportH - top - 12,
       ));
       const railChrome = 40 + 10 + 7 + (error === '' ? 0 : 24);
@@ -947,13 +952,18 @@ window.__ModuleLoader__.load({
           ));
         }
       }
+      const tickStep = chapterCount > 1
+        ? (listHeight - tickHeight) / (chapterCount - 1)
+        : 0;
 
       const rail = h('div', {
         ref: rootRef,
         className: 'codex-rail-root',
         style: { top: `${top + 8}px`, height: `${railHeight}px` },
         'aria-label': t('title'),
+        id: 'codex-rail-v2',
         'data-codex-history-rail': '',
+        'data-rail-version': '2',
         onMouseLeave: () => setHover(null),
       },
         h('div', { className: 'codex-rail-head' },
@@ -976,17 +986,28 @@ window.__ModuleLoader__.load({
             : h('div', { className: 'codex-rail-busy', role: 'status' }, t('loading'))),
         h('div', {
           className: 'codex-rail-scroll',
-          style: { gap: `${tickGap}px` },
+          style: {
+            position: 'relative',
+            display: 'block',
+            height: `${listHeight}px`,
+            maxHeight: `${listHeight}px`,
+            overflow: 'hidden',
+          },
         },
           chapters.length === 0
             ? h('div', { className: 'codex-rail-empty' }, t('empty'))
-            : chapters.map((chapter) => {
+            : chapters.map((chapter, index) => {
                 const isFavorite = favoriteIds.has(`${sessionId}::${chapter.turn}`);
                 return h('button', {
                   key: chapter.turn,
                   type: 'button',
                   className: 'codex-rail-tick',
-                  style: { height: `${tickHeight}px` },
+                  style: {
+                    position: 'absolute',
+                    left: '10px',
+                    top: `${index * tickStep}px`,
+                    height: `${tickHeight}px`,
+                  },
                   'data-active': activeTurn === chapter.turn ? 'true' : undefined,
                   'data-saved': isFavorite ? 'true' : undefined,
                   'aria-label': t('chapter', { turn: chapter.turn }),
